@@ -4,14 +4,18 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Rectangle;
 
 public class testController implements Initializable {
     @FXML private Rectangle car;
+    private Rectangle clip;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -27,30 +31,28 @@ public class testController implements Initializable {
             public void handle(long now) {
                 if (now - lastUpdate >= 25_000_000) {   // 1ms = 1_000_000 ns
                     // update 할 것들
-                    // System.out.println(car.getTranslateX());
+                    moveCamera();
                     lastUpdate = now;
                 }
             }
         };
         timer.start();
+    }
 
-//         Thread cameraThread = new Thread() {
-// 			@Override
-// 			public void run() {
+    public void moveCamera() {
+        // if (player.getTranslateX() > 640 && player.getTranslateX() < level.levelWidth-640 ) {
+		// 	level.blockContainer.setLayoutX(-(player.getTranslateX()-640));
+		// }
+        
+    }
 
-// 				AnimationTimer timer = new AnimationTimer() {
-// 					@Override
-// 					public void handle(long now) {
-// 						// moveCamera();
-// //						System.out.println("CAMERA");
-// 					}
-// 				};
-// 				timer.start();
-// 			}
-// 		};
-// 		Platform.runLater(cameraThread);
-// 		cameraThread.setDaemon(true);
-// 		cameraThread.start();
+    public void makeClip() {
+        Scene scene = App.getScene();
+        clip.widthProperty().bind(scene.widthProperty());
+        clip.heightProperty().bind(scene.heightProperty());
+
+        clip.xProperty().setValue(800);
+        clip.yProperty().setValue(800);
     }
 }
 
@@ -84,7 +86,8 @@ class Car {
                             break;
                 case SPACE: reset();
                             break;
-                default:    System.out.println("Not Correct KeyCode");
+                default:    camera();
+                            System.out.println("Not Correct KeyCode");
                             break;
             }
         });
@@ -117,5 +120,11 @@ class Car {
 
     public Bounds getBound() {
         return car.getBoundsInLocal();
+    }
+
+    public void camera() {
+        // car.setClip();
+        System.out.println(car.yProperty());
+        // car.getClip();
     }
 }
