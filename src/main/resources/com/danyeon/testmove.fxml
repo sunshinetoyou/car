@@ -2,9 +2,13 @@
 
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 
-<Pane fx:id="map" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.danyeon.testMoveController">
+<Pane fx:id="map" prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.danyeon.testMoveController">
    <children>
-      <Circle fx:id="circle" fill="DODGERBLUE" focusTraversable="true" layoutX="290.0" layoutY="200.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="DODGERBLUE" layoutX="173.0" layoutY="248.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="DODGERBLUE" layoutX="279.0" layoutY="783.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="DODGERBLUE" layoutX="819.0" layoutY="433.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+      <Rectangle fx:id="car" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" focusTraversable="true" height="80.0" layoutX="315.0" layoutY="124.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
    </children>
 </Pane>

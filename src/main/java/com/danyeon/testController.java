@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
@@ -47,12 +45,16 @@ public class testController implements Initializable {
     }
 
     public void makeClip() {
-        Scene scene = App.getScene();
+        Scene scene = scene();
         clip.widthProperty().bind(scene.widthProperty());
         clip.heightProperty().bind(scene.heightProperty());
 
         clip.xProperty().setValue(800);
         clip.yProperty().setValue(800);
+    }
+
+    private Scene scene() {
+        return car.getScene();
     }
 }
 
