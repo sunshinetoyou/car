@@ -14,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 
 public class testMoveController implements Initializable{
     
+    @FXML private Pane rootNode;
     @FXML private Rectangle car;
     @FXML private Pane map;
     @FXML private Rectangle clip;
@@ -40,7 +41,7 @@ public class testMoveController implements Initializable{
                             // System.out.println("CLIP : " + clip.getTranslateX());
                             // System.out.println("CLAMPRANGE : " +clampRange(getRealX()-(clip.getWidth() - car.getWidth())/2, 0, map.getWidth()-clip.getWidth()));
                             // System.out.println("MAP : " + map.getLayoutX() + " " + map.getLayoutY());
-                            System.out.println(App.getScene());
+                            System.out.println("ROOTNODE : " + rootNode.getLayoutX());
                             break;
             }
         });
@@ -52,18 +53,17 @@ public class testMoveController implements Initializable{
 
     public void moveClip() {
         Scene scene = App.getScene();
-        if (scene != null) {
-            clip.widthProperty().bind(scene.widthProperty());
-            clip.heightProperty().bind(scene.heightProperty());
-        }
+
+        clip.widthProperty().bind(scene.widthProperty());
+        clip.heightProperty().bind(scene.heightProperty());
 
         clip.xProperty().bind(Bindings.createDoubleBinding(
             () -> clampRange(getRealX()-(clip.getWidth() - car.getWidth())/2, 0, map.getWidth()-clip.getWidth()),
-            car.translateXProperty()
+            car.translateXProperty(), scene.widthProperty()
         ));
         clip.yProperty().bind(Bindings.createDoubleBinding(
             ()-> clampRange(getRealY()-(clip.getHeight() - car.getHeight())/2, 0, map.getHeight()-clip.getHeight()),
-            car.translateYProperty()
+            car.translateYProperty(), scene.heightProperty()
         ));
     }
 
@@ -73,6 +73,15 @@ public class testMoveController implements Initializable{
             car.translateXProperty()
         ));
         map.layoutYProperty().bind(Bindings.createDoubleBinding(
+            ()-> -car.getTranslateY(),
+            car.translateYProperty()
+        ));
+
+        rootNode.layoutXProperty().bind(Bindings.createDoubleBinding(
+            () -> -car.getTranslateX(),
+            car.translateXProperty()
+        ));
+        rootNode.layoutYProperty().bind(Bindings.createDoubleBinding(
             ()-> -car.getTranslateY(),
             car.translateYProperty()
         ));
