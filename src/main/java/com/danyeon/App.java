@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,10 +15,11 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private static Rectangle clip = new Rectangle();
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("test"));
+        scene = new Scene(loadFXML("testMove"), 400, 400);
         stage.setScene(scene);
         stage.show();
     }
@@ -35,4 +37,14 @@ public class App extends Application {
         launch();
     }
 
+    public static Rectangle makeClip() {
+        clip.widthProperty().bind(scene.widthProperty());
+        clip.heightProperty().bind(scene.heightProperty());
+
+        return clip;
+    }
+
+    public static Scene getScene() {
+        return scene;
+    }
 }
