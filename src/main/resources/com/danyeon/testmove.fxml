@@ -7,7 +7,6 @@
 <Pane fx:id="rootNode" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.danyeon.testMoveController">
    <children>
       <Rectangle fx:id="car" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" focusTraversable="true" height="80.0" stroke="BLACK" strokeType="INSIDE" width="40.0" x="200.0" y="160.0" />
-      <Rectangle fx:id="clip" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" stroke="RED" strokeType="OUTSIDE" strokeWidth="5.0" width="200.0" x="100.0" y="100.0" />
       <Rectangle fx:id="car2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" width="50.0" x="500.0" y="600.0" />
       <Pane fx:id="map" prefHeight="2000.0" prefWidth="2000.0">
          <children>
