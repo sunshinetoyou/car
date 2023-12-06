@@ -22,11 +22,9 @@ public class testMoveController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-
-        // Platform.runLater(() ->
-        //     moveClip()
-        // );
-        moveMap(car);
+        Platform.runLater(
+            () -> moveMap(car)
+        );
 
         car.setOnKeyPressed((KeyEvent event) -> {
             switch (event.getCode()) {
@@ -40,46 +38,22 @@ public class testMoveController implements Initializable{
                             break;
                 default:    // System.out.println("Not Correct Value");
                             moveMap(car2);
-                            // System.out.println("CAR.x : " + car.getX() + "\nCAR.translateX : " + car.getTranslateX());
-                            // System.out.println("CLIP.translateX : " + clip.getTranslateX() + "\nCLIP.width : " + clip.getWidth());
-                            // System.out.println("CLAMPRANGE : " +clampRange(getRealX()-(clip.getWidth() - car.getWidth())/2, 0, map.getWidth()-clip.getWidth()));
-                            // System.out.println("MAP : " + map.getLayoutX() + " " + map.getLayoutY());
-                            // System.out.println("SCENE.width :" + App.getScene().getWidth());
-                            // System.out.println("ROOTNODE : " + rootNode.getLayoutX());
+                            testPrint();
                             break;
             }
         });
     }
 
-    // public void moveClip() {
-    //     Scene scene = App.getScene();
-
-    //     clip.widthProperty().bind(scene.widthProperty());
-    //     clip.heightProperty().bind(scene.heightProperty());
-
-    //     clip.xProperty().bind(Bindings.createDoubleBinding(
-    //         () -> clampRange(getRealX()-(clip.getWidth() - car.getWidth())/2, 0, map.getWidth()-clip.getWidth()),
-    //         car.translateXProperty(), scene.widthProperty()
-    //     ));
-    //     clip.yProperty().bind(Bindings.createDoubleBinding(
-    //         ()-> clampRange(getRealY()-(clip.getHeight() - car.getHeight())/2, 0, map.getHeight()-clip.getHeight()),
-    //         car.translateYProperty(), scene.heightProperty()
-    //     ));
-    // }
-
-    public void moveMap(Rectangle car) {
-        // System.out.println("layoutX" + (getRealX(car)-(clip.getWidth() - car.getWidth())/2));
-        // System.out.println("layoutY" + (getRealY(car)-(clip.getHeight() - car.getHeight())/2));
-        rootNode.setLayoutX(getRealX(car)-(clip.getWidth() - car.getWidth())/2);
-        rootNode.setLayoutY(getRealY(car)-(clip.getHeight() - car.getHeight())/2);
+    public void moveMap(Rectangle center) {
+        Scene scene = App.getScene();
 
         rootNode.layoutXProperty().bind(Bindings.createDoubleBinding(
-            () -> -car.getTranslateX(),
-            car.translateXProperty()
+            () -> -(getRealX(center)-(scene.getWidth() - car.getWidth())/2),
+            center.translateXProperty(), scene.widthProperty()
         ));
         rootNode.layoutYProperty().bind(Bindings.createDoubleBinding(
-            ()-> -car.getTranslateY(),
-            car.translateYProperty()
+            ()-> -(getRealY(center)-(scene.getHeight() - car.getHeight())/2),
+            center.translateYProperty(), scene.heightProperty()
         ));
     }
 
@@ -97,5 +71,15 @@ public class testMoveController implements Initializable{
 
     public double getRealY(Rectangle car) {
         return car.getY() + car.getTranslateY();
+    }
+    
+    public void testPrint() {
+        System.out.println("ROOTNODE.layoutX : " + rootNode.getLayoutX() +"\tROOTNODE.width : " + rootNode.getWidth());
+        System.out.println("CAR.x : " + car.getX() + "\tCAR.translateX : " + car.getTranslateX());
+        // System.out.println("CLIP.translateX : " + clip.getTranslateX() + "\tCLIP.width : " + clip.getWidth());
+        // System.out.println("SCENE.width :" + App.getScene().getWidth());
+        System.out.println("setRootNodeX" + (getRealX(car)-(App.getScene().getWidth() - car.getWidth())/2));
+        // moveMap(car2);
+        // System.out.println("CAR2.x :" + car2.getX() + "\tCAR2.translateX : "+ car.getTranslateX());
     }
 }
