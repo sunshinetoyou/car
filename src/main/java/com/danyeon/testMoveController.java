@@ -3,7 +3,7 @@ package com.danyeon;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,20 +14,24 @@ import javafx.scene.shape.Rectangle;
 
 public class testMoveController implements Initializable{
     
+    @FXML private Pane rootNode;
     @FXML private Rectangle car;
+    @FXML private Rectangle car2;
     @FXML private Pane map;
-    private Rectangle clip = new Rectangle();
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        
-        update();
-        
+
+        // scene 생성된 후에 작동
+        // 이렇게 안하면 scene에 null 값이 들어감
+        Platform.runLater(
+            () -> moveScreen(car)
+        );
+
+        // 키보드 이벤트 핸들러
         car.setOnKeyPressed((KeyEvent event) -> {
-            // System.out.println(event.getCode());
             switch (event.getCode()) {
                 case RIGHT: car.setTranslateX(car.getTranslateX() + 30);
-                            // System.out.println(clip.getX());
                             break;
                 case LEFT:  car.setTranslateX(car.getTranslateX() - 30);
                             break;
@@ -35,77 +39,46 @@ public class testMoveController implements Initializable{
                             break;
                 case DOWN:  car.setTranslateY(car.getTranslateY() + 30);
                             break;
-                // case SPACE: reset();
-                //             break;
-                default:    // System.out.println("car : " + car.translateXProperty().getValue());
-                            // System.out.println("Scene : " + getScene().xProperty().getValue() + "    " + getScene().yProperty().getValue());
-                            // System.out.println("clip : " + clip.xProperty().getValue() + "    " + clip.yProperty().getValue());
-                            // System.out.println("Not Correct KeyCode");
-                            System.out.println(map.getWidth());
+                default:    System.out.println("Not Correct Value");
+                            // moveScreen(car2);
+                            // testPrint();
                             break;
             }
         });
     }
 
-    private double clampRange(double value, double min, double max) {
-        // System.out.println("value : " + value);
-        // System.out.println("min : " + min);
-        // System.out.println("max : " + max);
-
-        if (value < min) {
-            return min;
-        }
-        if (value > max) {
-            return max ;
-        }
-        return value ;
-    }
-
-    public Rectangle makeClip() {
-        Scene scene = getScene();
-
-        // clip.widthProperty().bind(scene.widthProperty());
-        // clip.heightProperty().bind(scene.heightProperty());
-
-        // System.out.println("car : RealX / " + getRealX());
-        // System.out.println("a : " + (scene.getWidth()-car.getWidth())/2);
-        // System.out.println(map.getWidth());
-        // System.out.println("value : " + (getRealX() - (scene.getWidth()-car.getWidth())/2));
-        System.out.println(clampRange(25, 0, 100));
-        clip.xProperty().bind(Bindings.createDoubleBinding(
-            () -> clampRange(getRealX() - (scene.getWidth()-car.getWidth())/2, 0, map.getWidth() - scene.getWidth()),
-            car.xProperty(), scene.widthProperty()
+    public void moveScreen(Rectangle center) {
+        Scene scene = App.getScene();
+        
+        // rootNode(=Scene) 의 layout 값을 변경해서 맵 이동 구현
+        // car.translate : car 가 이동할 때
+        // scene.width   : 창 사이즈가 바뀔 때 -> rootNode.layoutX를 재조정
+        rootNode.layoutXProperty().bind(Bindings.createDoubleBinding(
+            () -> -(getRealX(center)-(scene.getWidth() - car.getWidth())/2),
+            center.translateXProperty(), scene.widthProperty()
         ));
-        // clip.yProperty().bind(car.translateYProperty());
-
-        clip.widthProperty().setValue(400);
-        clip.heightProperty().setValue(400);
-
-        return clip;
+        rootNode.layoutYProperty().bind(Bindings.createDoubleBinding(
+            ()-> -(getRealY(center)-(scene.getHeight() - car.getHeight())/2),
+            center.translateYProperty(), scene.heightProperty()
+        ));
     }
-
-    public Scene getScene() {
-        return (Scene) car.getScene();
+    
+    // 객체의 위치와 이동값을 합해서 반환
+    public double getRealX(Rectangle car) {
+        return car.getX() + car.getTranslateX();
     }
-
-    public double getRealX() {
-        return car.getLayoutX() + car.getTranslateX();
+    public double getRealY(Rectangle car) {
+        return car.getY() + car.getTranslateY();
     }
-
-    public void update() {
-        AnimationTimer timer = new AnimationTimer() {
-            
-            private long lastUpdate = 0;
-            @Override
-            public void handle(long now) {
-                if (now - lastUpdate >= 2_000_000_000) {   // 1ms = 1_000_000 ns
-                    // update 할 것들
-                    // map.setClip(makeClip());
-                    // System.out.println(getScene().widthProperty());
-                    lastUpdate = now;
-                }
-            }
-        };
-        timer.start();
+    
+    // 테스트 코드
+    public void testPrint() {
+        System.out.println("ROOTNODE.layoutX : " + rootNode.getLayoutX() +"\tROOTNODE.width : " + rootNode.getWidth());
+        System.out.println("CAR.x : " + car.getX() + "\tCAR.translateX : " + car.getTranslateX());
+        // System.out.println("CLIP.translateX : " + clip.getTranslateX() + "\tCLIP.width : " + clip.getWidth());
+        // System.out.println("SCENE.width :" + App.getScene().getWidth());
+        System.out.println("setRootNodeX" + (getRealX(car)-(App.getScene().getWidth() - car.getWidth())/2));
+        // moveMap(car2);
+        // System.out.println("CAR2.x :" + car2.getX() +    "\tCAR2.translateX : "+ car.getTranslateX());
     }
 }
