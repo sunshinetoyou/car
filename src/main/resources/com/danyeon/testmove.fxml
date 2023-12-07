@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.LineTo?>
+<?import javafx.scene.shape.MoveTo?>
+<?import javafx.scene.shape.Path?>
 <?import javafx.scene.shape.Rectangle?>
 
-<Pane fx:id="rootNode" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.danyeon.testMoveController">
+<Pane fx:id="rootNode" prefHeight="2000.0" prefWidth="2000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.danyeon.testMoveController">
    <children>
       <Rectangle fx:id="car" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" focusTraversable="true" height="80.0" stroke="BLACK" strokeType="INSIDE" width="40.0" x="200.0" y="160.0" />
-      <Rectangle fx:id="car2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" width="50.0" x="500.0" y="600.0" />
       <Pane fx:id="map" prefHeight="2000.0" prefWidth="2000.0">
          <children>
-            <Circle fill="DODGERBLUE" layoutX="189.0" layoutY="1614.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="430.0" layoutY="369.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="DODGERBLUE" layoutX="1707.0" layoutY="1673.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+            <Path fx:id="path" fill="DODGERBLUE" stroke="BLACK">
+                <elements>
+                    <MoveTo />
+                    <LineTo x="2000.0" y="300.0" />
+                </elements>
+            </Path>
          </children>
       </Pane>
    </children>

@@ -1,6 +1,7 @@
 package com.danyeon;
 
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -16,8 +17,7 @@ public class testMoveController implements Initializable{
     
     @FXML private Pane rootNode;
     @FXML private Rectangle car;
-    @FXML private Rectangle car2;
-    @FXML private Pane map;
+    @FXML private Path path;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -39,9 +39,9 @@ public class testMoveController implements Initializable{
                             break;
                 case DOWN:  car.setTranslateY(car.getTranslateY() + 30);
                             break;
-                default:    System.out.println("Not Correct Value");
+                default:    // System.out.println("Not Correct Value");
                             // moveScreen(car2);
-                            // testPrint();
+                            testPrint();
                             break;
             }
         });
@@ -70,15 +70,18 @@ public class testMoveController implements Initializable{
     public double getRealY(Rectangle car) {
         return car.getY() + car.getTranslateY();
     }
+
+    // 충돌 감지
+    public void isCrash() {
+        
+    }
     
     // 테스트 코드
     public void testPrint() {
-        System.out.println("ROOTNODE.layoutX : " + rootNode.getLayoutX() +"\tROOTNODE.width : " + rootNode.getWidth());
-        System.out.println("CAR.x : " + car.getX() + "\tCAR.translateX : " + car.getTranslateX());
+        // System.out.println("ROOTNODE.layoutX : " + rootNode.getLayoutX() +"\tROOTNODE.width : " + rootNode.getWidth());
+        // System.out.println("setRootNodeX" + (getRealX(car)-(App.getScene().getWidth() - car.getWidth())/2));
         // System.out.println("CLIP.translateX : " + clip.getTranslateX() + "\tCLIP.width : " + clip.getWidth());
-        // System.out.println("SCENE.width :" + App.getScene().getWidth());
-        System.out.println("setRootNodeX" + (getRealX(car)-(App.getScene().getWidth() - car.getWidth())/2));
-        // moveMap(car2);
-        // System.out.println("CAR2.x :" + car2.getX() +    "\tCAR2.translateX : "+ car.getTranslateX());
+        System.out.println("CAR.x : " + car.getX() + "\tCAR.translateX : " + car.getTranslateX());
+        System.out.println("PATH.width :" + path.getWidth());
     }
 }
