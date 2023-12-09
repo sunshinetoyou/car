@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.LineTo?>
-<?import javafx.scene.shape.MoveTo?>
-<?import javafx.scene.shape.Path?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.QuadCurve?>
 <?import javafx.scene.shape.Rectangle?>
 
 <Pane fx:id="rootNode" prefHeight="2000.0" prefWidth="2000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.danyeon.testMoveController">
@@ -11,12 +10,8 @@
       <Rectangle fx:id="car" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" focusTraversable="true" height="80.0" stroke="BLACK" strokeType="INSIDE" width="40.0" x="200.0" y="160.0" />
       <Pane fx:id="map" prefHeight="2000.0" prefWidth="2000.0">
          <children>
-            <Path fx:id="path" fill="DODGERBLUE" stroke="BLACK">
-                <elements>
-                    <MoveTo />
-                    <LineTo x="2000.0" y="300.0" />
-                </elements>
-            </Path>
+            <Line fx:id="line" endX="2000.0" endY="300.0" />
+            <QuadCurve fx:id="quad" controlX="50.0" controlY="-50.0" endX="100.0" fill="DODGERBLUE" layoutX="500.0" layoutY="500.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </Pane>
    </children>

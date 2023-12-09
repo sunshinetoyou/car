@@ -1,7 +1,6 @@
 package com.danyeon;
 
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -11,13 +10,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Rectangle;
 
 public class testMoveController implements Initializable{
     
     @FXML private Pane rootNode;
     @FXML private Rectangle car;
-    @FXML private Path path;
+    @FXML private Line line;
+    @FXML private QuadCurve quad;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -72,16 +74,22 @@ public class testMoveController implements Initializable{
     }
 
     // 충돌 감지
-    public void isCrash() {
-        
-    }
+    // public Boolean isCrash() {
+
+    //     return car.getBoundsInParent().intersects(path.getBoundsInLocal());
+    // }
     
     // 테스트 코드
     public void testPrint() {
         // System.out.println("ROOTNODE.layoutX : " + rootNode.getLayoutX() +"\tROOTNODE.width : " + rootNode.getWidth());
         // System.out.println("setRootNodeX" + (getRealX(car)-(App.getScene().getWidth() - car.getWidth())/2));
         // System.out.println("CLIP.translateX : " + clip.getTranslateX() + "\tCLIP.width : " + clip.getWidth());
-        System.out.println("CAR.x : " + car.getX() + "\tCAR.translateX : " + car.getTranslateX());
-        System.out.println("PATH.width :" + path.getWidth());
+        System.out.println("CAR.parentBound : " + car.getBoundsInParent());
+        // System.out.println("LINE.start : (" + line.getStartX()+","+ line.getStartY()+")"+
+        //                    "\tLINE.end : (" + line.getEndX()+","+ line.getEndY()+")");
+        // System.out.println("QUADCURVE.start : (" + quad.getStartX()+","+ quad.getStartY()+")"+
+        //                    "\tQUADCURVE.end : (" + quad.getEndX()+","+ quad.getEndY()+")"+
+        //                    "\tQUADCURVE.control : (" + quad.getControlX()+","+ quad.getControlY()+")");
+        // System.out.println(isCrash());
     }
 }
